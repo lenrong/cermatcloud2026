@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Belanja SPM - CERMAT-CLOUD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --light-green: #4caf50;
+            --soft-green: #e8f5e9;
+            --dark-green: #1b5e20;
+            --white: #ffffff;
+            --light-gray: #f5f7fa;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+            --text-medium: #555555;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 10px 25px rgba(46, 125, 50, 0.15);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--soft-green);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--white);
+            color: var(--primary-green);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin-right: 30px;
+        }
+
+        .back-btn:hover {
+            background-color: var(--soft-green);
+            transform: translateX(-3px);
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        .header-title h1 {
+            color: var(--primary-green);
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header-title p {
+            color: var(--text-medium);
+            font-size: 16px;
+        }
+
+        .form-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            padding: 30px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--soft-green);
+        }
+
+        .section-icon {
+            background-color: var(--soft-green);
+            color: var(--primary-green);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .section-title h2 {
+            font-size: 22px;
+            color: var(--text-dark);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-control, .form-select, textarea.form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--white);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-control:focus, .form-select:focus, textarea.form-control:focus {
+            outline: none;
+            border-color: var(--light-green);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        .dynamic-section {
+            background-color: var(--soft-green);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .dynamic-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: flex-end;
+        }
+
+        .dynamic-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .dynamic-item .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background-color: var(--light-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(46, 125, 50, 0.25);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-green);
+            border: 2px solid var(--light-green);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--soft-green);
+        }
+
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+            border-color: #f44336;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        .summary-box {
+            background-color: var(--soft-green);
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--medium-gray);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--dark-green);
+        }
+
+        .summary-label {
+            font-weight: 600;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* Styling untuk dropdown searchable */
+        .dropdown-search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .dropdown-search-list {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 300px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            margin-top: 2px;
+        }
+
+        .dropdown-search-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+
+        .dropdown-search-item:hover {
+            background-color: var(--soft-green);
+            color: var(--dark-green);
+        }
+
+        .dropdown-search-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-no-result {
+            padding: 15px;
+            text-align: center;
+            color: var(--text-medium);
+            font-style: italic;
+        }
+
+        /* Status message */
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .status-success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .status-error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dynamic-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header dengan tombol kembali -->
+    <div class="header">
+        <a href="index.html" class="back-btn" id="backBtn">
+            <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+        </a>
+        <div class="header-title">
+            <h1>Formulir Input Belanja SPM</h1>
+            <p>CERMAT-CLOUD - Sistem Cek dan Rekonsiliasi Manajemen Transaksi</p>
+        </div>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <!-- Status Message (akan ditampilkan saat submit) -->
+        <div id="statusMessage" class="status-message" style="display: none;"></div>
+        
+        <form id="spmForm">
+            <!-- Bagian 1: Data Identitas SPM -->
+            <div class="form-section">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h2>Data Identitas SPM</h2>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="jenisSpm">Jenis SPM *</label>
+                        <select class="form-select" id="jenisSpm" name="jenisSpm" required>
+                            <option value="">Pilih Jenis SPM</option>
+                            <option value="UP">UP (Uang Persediaan)</option>
+                            <option value="GU">GU (Ganti Uang)</option>
+                            <option value="LS">LS (Langsung)</option>
+                            <option value="TU">TU (Tunai)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tanggalSpm">Tanggal SPM *</label>
+                        <input type="date" class="form-control" id="tanggalSpm" name="tanggalSpm" required>
+                    </div>
+                    
+                    <!-- Dropdown SKPD Searchable -->
+                    <div class="form-group">
+                        <label for="skpdDropdownInput">SKPD/OPD *</label>
+                        <div class="dropdown-search-container">
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="skpdDropdownInput" 
+                                   placeholder="Ketik untuk mencari SKPD..." 
+                                   autocomplete="off"
+                                   required>
+                            <div class="dropdown-search-list" id="skpdDropdownList">
+                                <!-- Opsi akan diisi oleh JavaScript -->
+                            </div>
+                        </div>
+                        <input type="hidden" id="skpd" name="skpd" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nomorSpm">Nomor SPM *</label>
+                        <input type="text" class="form-control" id="nomorSpm" name="nomorSpm" placeholder="Nomor dokumen SPM" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="uraianSpm">Uraian SPM *</label>
+                    <textarea class="form-control" id="uraianSpm" name="uraianSpm" placeholder="Deskripsi tujuan/keperluan belanja" required></textarea>
+                </div>
+            </div>
+            
+            <!-- Bagian 2: Sumber & Nilai Dana -->
+            <div class="form-section">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h2>Sumber & Nilai Dana</h2>
+                </div>
+                
+                <div class="dynamic-section" id="sumberDanaContainer">
+                    <!-- Item sumber dana akan ditambahkan di sini oleh JavaScript -->
+                    <div class="dynamic-item" id="sumberDanaTemplate">
+                        <div class="form-group">
+                            <label>Sumber Dana *</label>
+                            <div class="dropdown-search-container sumber-dana-dropdown">
+                                <input type="text" class="form-control sumber-dana-input" 
+                                       placeholder="Ketik untuk mencari sumber dana..." 
+                                       autocomplete="off" required>
+                                <div class="dropdown-search-list sumber-dana-list">
+                                    <!-- Opsi akan diisi oleh JavaScript -->
+                                </div>
+                            </div>
+                            <input type="hidden" class="sumber-dana-value" name="sumber_dana[]">
+                        </div>
+                        <div class="form-group">
+                            <label>Nilai (Rp) *</label>
+                            <input type="number" class="form-control nilai-dana-input" 
+                                   placeholder="0" min="0" required name="nilai_dana[]">
+                        </div>
+                        <button type="button" class="btn btn-danger btn-sm btn-hapus-sumber" style="display: none;">
+                            <i class="fas fa-trash"></i> Hapus
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn btn-outline" id="tambahSumberBtn">
+                    <i class="fas fa-plus"></i> Tambah Sumber Dana
+                </button>
+                
+                <div class="summary-box">
+                    <div class="summary-item">
+                        <span class="summary-label">Total Nilai Bruto:</span>
+                        <span class="summary-value" id="totalBruto">Rp 0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bagian 3: Potongan Iuran & TAPERA -->
+            <div class="form-section">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h2>Potongan Iuran & TAPERA</h2>
+                </div>
+                
+                <div class="dynamic-section" id="potonganIuranContainer">
+                    <!-- Item potongan iuran akan ditambahkan di sini oleh JavaScript -->
+                    <div class="dynamic-item" id="potonganIuranTemplate">
+                        <div class="form-group">
+                            <label>Jenis Potongan</label>
+                            <select class="form-select jenis-potongan-select" name="jenis_potongan[]">
+                                <option value="">Pilih Jenis Potongan</option>
+                                <option value="iuran_wajib_8">Iuran Wajib Pegawai (8%)</option>
+                                <option value="jaminan_kesehatan_4">Iuran Jaminan Kesehatan (4%)</option>
+                                <option value="jaminan_kecelakaan">Iuran Jaminan Kecelakaan Kerja</option>
+                                <option value="jaminan_kematian">Iuran Jaminan Kematian</option>
+                                <option value="iuran_wajib_1">Iuran Wajib Pegawai (1%)</option>
+                                <option value="tapera">TAPERA</option>
+                                <option value="lainnya">Potongan Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Nilai (Rp)</label>
+                            <input type="number" class="form-control nilai-potongan-input" 
+                                   placeholder="0" min="0" name="nilai_potongan[]">
+                        </div>
+                        <button type="button" class="btn btn-danger btn-sm btn-hapus-potongan" style="display: none;">
+                            <i class="fas fa-trash"></i> Hapus
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn btn-outline" id="tambahPotonganIuranBtn">
+                    <i class="fas fa-plus"></i> Tambah Potongan Iuran
+                </button>
+            </div>
+            
+            <!-- Bagian 4: Potongan Pajak -->
+            <div class="form-section">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <h2>Potongan Pajak</h2>
+                </div>
+                
+                <div class="dynamic-section" id="potonganPajakContainer">
+                    <!-- Item potongan pajak akan ditambahkan di sini oleh JavaScript -->
+                    <div class="dynamic-item" id="potonganPajakTemplate">
+                        <div class="form-group">
+                            <label>Jenis Pajak</label>
+                            <select class="form-select jenis-pajak-select" name="jenis_pajak[]">
+                                <option value="">Pilih Jenis Pajak</option>
+                                <option value="ppn">Pajak Pertambahan Nilai (PPN)</option>
+                                <option value="pph21">Pajak Penghasilan Pasal 21 (PPh 21)</option>
+                                <option value="pph22">Pajak Penghasilan Pasal 22 (PPh 22)</option>
+                                <option value="pph23">Pajak Penghasilan Pasal 23 (PPh 23)</option>
+                                <option value="pph25">Pajak Penghasilan Pasal 25 (PPh 25)</option>
+                                <option value="pph26">Pajak Penghasilan Pasal 26 (PPh 26)</option>
+                                <option value="pph4_2">Pajak Penghasilan Pasal 4 ayat (2)</option>
+                                <option value="pph15">Pajak Penghasilan Pasal 15 (PPh 15)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Nilai (Rp)</label>
+                            <input type="number" class="form-control nilai-pajak-input" 
+                                   placeholder="0" min="0" name="nilai_pajak[]">
+                        </div>
+                        <button type="button" class="btn btn-danger btn-sm btn-hapus-pajak" style="display: none;">
+                            <i class="fas fa-trash"></i> Hapus
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn btn-outline" id="tambahPotonganPajakBtn">
+                    <i class="fas fa-plus"></i> Tambah Potongan Pajak
+                </button>
+            </div>
+            
+            <!-- Bagian 5: Ringkasan & Total -->
+            <div class="form-section">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h2>Ringkasan & Total</h2>
+                </div>
+                
+                <div class="summary-box">
+                    <div class="summary-item">
+                        <span class="summary-label">Total Nilai Bruto:</span>
+                        <span class="summary-value" id="summaryBruto">Rp 0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total Potongan Iuran:</span>
+                        <span class="summary-value" id="totalPotonganIuran">Rp 0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total Potongan Pajak:</span>
+                        <span class="summary-value" id="totalPotonganPajak">Rp 0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total Semua Potongan:</span>
+                        <span class="summary-value" id="totalSemuaPotongan">Rp 0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">NILAI NETTO (BERSIH) YANG DIBAYARKAN:</span>
+                        <span class="summary-value" id="nilaiNetto">Rp 0</span>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="resetBtn">
+                        <i class="fas fa-redo"></i> Reset Form
+                    </button>
+                    <button type="submit" class="btn" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i> Simpan Data Belanja
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Format angka ke format Rupiah
+            function formatRupiah(angka) {
+                return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
+            
+            // Parse format Rupiah ke angka
+            function parseRupiah(rupiahString) {
+                return parseInt(rupiahString.replace(/[^0-9]/g, '')) || 0;
+            }
+            
+            // Hitung total dari elemen dengan kelas tertentu
+            function hitungTotal(selector) {
+                let total = 0;
+                document.querySelectorAll(selector).forEach(input => {
+                    const nilai = parseFloat(input.value) || 0;
+                    total += nilai;
+                });
+                return total;
+            }
+            
+            // Update semua total dan ringkasan
+            function updateRingkasan() {
+                // Hitung total bruto dari semua sumber dana
+                const totalBruto = hitungTotal('.nilai-dana-input');
+                document.getElementById('totalBruto').textContent = formatRupiah(totalBruto);
+                document.getElementById('summaryBruto').textContent = formatRupiah(totalBruto);
+                
+                // Hitung total potongan iuran
+                const totalPotonganIuran = hitungTotal('#potonganIuranContainer .nilai-potongan-input');
+                document.getElementById('totalPotonganIuran').textContent = formatRupiah(totalPotonganIuran);
+                
+                // Hitung total potongan pajak
+                const totalPotonganPajak = hitungTotal('#potonganPajakContainer .nilai-pajak-input');
+                document.getElementById('totalPotonganPajak').textContent = formatRupiah(totalPotonganPajak);
+                
+                // Hitung total semua potongan
+                const totalSemuaPotongan = totalPotonganIuran + totalPotonganPajak;
+                document.getElementById('totalSemuaPotongan').textContent = formatRupiah(totalSemuaPotongan);
+                
+                // Hitung nilai netto
+                const nilaiNetto = totalBruto - totalSemuaPotongan;
+                document.getElementById('nilaiNetto').textContent = formatRupiah(nilaiNetto);
+                
+                return {
+                    totalBruto,
+                    totalPotonganIuran,
+                    totalPotonganPajak,
+                    nilaiNetto
+                };
+            }
+            
+            // Daftar SKPD
+            const skpdOptions = [
+                "DINAS PENDIDIKAN, PEMUDA DAN OLAHRAGA",
+                "DINAS KESEHATAN",
+                "DINAS PEKERJAAN UMUM DAN PENATAAN RUANG",
+                "DINAS PERUMAHAN RAKYAT KAWASAN PERMUKIMAN DAN PERTANAHAN",
+                "SATUAN POLISI PAMONG PRAJA DAN PEMADAM KEBAKARAN",
+                "BADAN PENANGGULANGAN BENCANA DAERAH",
+                "DINAS SOSIAL",
+                "DINAS PEMBERDAYAAN PEREMPUAN DAN PERLINDUNGAN ANAK",
+                "DINAS KETAHANAN PANGAN",
+                "DINAS LINGKUNGAN HIDUP DAN KEBERSIHAN",
+                "DINAS KEPENDUDUKAN DAN PENCATATAN SIPIL",
+                "DINAS PEMBERDAYAAN MASYARAKAT DAN DESA",
+                "DINAS PENGENDALIAN PENDUDUK DAN KELUARGA BERENCANA",
+                "DINAS PERHUBUNGAN",
+                "DINAS KOMUNIKASI, INFORMATIKA DAN PERSANDIAN",
+                "DINAS KOPERASI, USAHA KECIL DAN MENENGAH, DAN PERINDUSTRIAN",
+                "DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU",
+                "DINAS PERPUSTAKAAN DAN KEARSIPAN",
+                "DINAS KELAUTAN DAN PERIKANAN",
+                "DINAS PARIWISATA DAN KEBUDAYAAN",
+                "DINAS PERKEBUNAN",
+                "DINAS TANAMAN PANGAN, HOLTIKULTURA, DAN PETERNAKAN",
+                "DINAS PERDAGANGAN",
+                "DINAS TRANSMIGRASI DAN TENAGA KERJA",
+                "SEKRETARIAT DAERAH",
+                "SEKRETARIAT DPRD",
+                "BADAN PERENCANAAN, PENELITIAN DAN PENGEMBANGAN",
+                "BADAN PENDAPATAN DAERAH",
+                "BADAN PENGELOLA KEUANGAN DAN ASET DAERAH",
+                "BADAN KEPEGAWAIAN, PENDIDIKAN DAN PELATIHAN",
+                "INSPEKTORAT DAERAH",
+                "KANTOR KECAMATAN MAMUJU",
+                "KANTOR KECAMATAN SIMBORO",
+                "KANTOR KECAMATAN TAPALANG",
+                "KANTOR KECAMATAN TAPALANG BARAT",
+                "KANTOR KECAMATAN KALUKKU",
+                "KANTOR KECAMATAN PAPALANG",
+                "KANTOR KECAMATAN SAMPAGA",
+                "KANTOR KECAMATAN BONEHAU",
+                "KANTOR KECAMATAN KALUMPANG",
+                "KANTOR KECAMATAN KEPULAUAN BALA-BALAKANG",
+                "KANTOR KECAMATAN TOMMO",
+                "BADAN KESATUAN BANGSA DAN POLITIK"
+            ];
+            
+            // Daftar Sumber Dana
+            const sumberDanaOptions = [
+                "Dana Alokasi Umum (DAU)",
+                "DAU yang Ditentukan Penggunaannya Bidang Pendidikan",
+                "DAU yang Ditentukan Penggunaannya Bidang Kesehatan",
+                "DAU yang Ditentukan Penggunaannya Bidang Pekerjaan Umum",
+                "DAU Tambahan Dukungan Pendanaan Kelurahan",
+                "DAU Tambahan Dukungan Pendanaan atas Kebijakan Penggajian Pegawai Pemerintah dengan Perjanjian Kerja",
+                "DAK Fisik-Bidang Pendidikan-PAUD",
+                "DAK Fisik-Bidang Pendidikan-SD",
+                "DAK Fisik-Bidang Pendidikan-SMP",
+                "DAK Fisik-Bidang Kesehatan dan KB-Reguler-Pelayanan Kesehatan Dasar",
+                "DAK Fisik-Bidang Kesehatan dan KB-Reguler-Pelayanan Kesehatan Rujukan",
+                "DAK Fisik-Bidang Kesehatan dan KB-Reguler-Pelayanan Kefarmasian",
+                "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Penurunan AKI dan AKB",
+                "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Penguatan Intervensi Stunting",
+                "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Peningkatan Pencegahan dan Pengendalian Penyakit dan Sanitasi Total Berbasis Masyarakat",
+                "DAK Fisik-Bidang Kesehatan dan KB-Afirmasi-Penguatan Prasarana Dasar Puskesmas",
+                "DAK Fisik-Bidang Kesehatan dan KB-Reguler-KB",
+                "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Penurunan Stunting (KB)",
+                "DAK Fisik-Bidang Jalan-Reguler-Jalan",
+                "DAK Fisik-Bidang Jalan-Penugasan-Jalan",
+                "DAK Fisik-Bidang Air Minum-Reguler",
+                "DAK Fisik-Bidang Air Minum-Afirmasi",
+                "DAK Fisik-Bidang Air Minum-Penugasan",
+                "DAK Fisik-Bidang Sanitasi-Reguler",
+                "DAK Fisik-Bidang Sanitasi-Afirmasi",
+                "DAK Fisik-Bidang Sanitasi-Penugasan",
+                "DAK Fisik-Bidang Irigasi-Penugasan",
+                "DAK Non Fisik-BOS Reguler",
+                "DAK Non Fisik-BOS Kinerja",
+                "DAK Non Fisik-BOP PAUD",
+                "DAK Non Fisik-BOP Pendidikan Kesetaraan",
+                "DAK Non Fisik-Dana BOK-BOK Dinas-BOK Kabupaten/Kota",
+                "DAK Non Fisik-Dana BOK-BOK Dinas-BOK Pengawasan Obat dan Makanan",
+                "DAK Non Fisik-BOKKB-BOKB",
+                "DAK Non Fisik-Dana Pelayanan Perlindungan Perempuan dan Anak",
+                "DBH Sawit",
+                "Dana Bagi Hasil (DBH)",
+                "Insentif Fiskal Untuk Penghargaan Kinerja Tahun Berjalan",
+                "Dana Desa",
+                "Pendapatan Bagi Hasil Pajak Rokok",
+                "Pajak Bahan Bakar Kendaraan Bermotor (PBBKB)",
+                "Pajak Air Permukaan",
+                "Pajak Daerah",
+                "PBJT-Konsumsi Tenaga Listrik dari Sumber Lain",
+                "Opsen PKB",
+                "Pajak Air Tanah",
+                "Retribusi Pelayanan Kesehatan di Puskesmas",
+                "Retribusi Pelayanan Kesehatan di Rumah Sakit Umum Daerah",
+                "Retribusi Jasa Umum",
+                "Bagian Laba yang Dibagikan kepada Pemerintah Daerah (Dividen) atas Penyertaan Modal pada Perusahaan Milik Daerah/BUMD",
+                "Lain-lain PAD Yang Sah",
+                "Sisa Lebih Perhitungan Anggaran Tahun Sebelumnya",
+                "Pajak Penerangan Jalan"
+            ];
+            
+            // Fungsi untuk membuat dropdown searchable
+            function initDropdown(inputId, listId, optionsArray, hiddenInputId) {
+                const inputElement = document.getElementById(inputId);
+                const listElement = document.getElementById(listId);
+                const hiddenInput = document.getElementById(hiddenInputId);
+                
+                if (!inputElement || !listElement || !hiddenInput) return;
+                
+                function toggleDropdown(show) {
+                    listElement.style.display = show ? 'block' : 'none';
+                }
+                
+                function filterOptions() {
+                    const searchTerm = inputElement.value.toLowerCase();
+                    listElement.innerHTML = '';
+                    
+                    const filteredOptions = optionsArray.filter(option => 
+                        option.toLowerCase().includes(searchTerm)
+                    );
+                    
+                    if (filteredOptions.length === 0) {
+                        listElement.innerHTML = '<div class="dropdown-no-result">Tidak ditemukan</div>';
+                        return;
+                    }
+                    
+                    filteredOptions.forEach(option => {
+                        const item = document.createElement('div');
+                        item.className = 'dropdown-search-item';
+                        item.textContent = option;
+                        
+                        item.addEventListener('click', function() {
+                            inputElement.value = option;
+                            hiddenInput.value = option;
+                            toggleDropdown(false);
+                        });
+                        
+                        listElement.appendChild(item);
+                    });
+                }
+                
+                inputElement.addEventListener('focus', function() {
+                    filterOptions();
+                    toggleDropdown(true);
+                });
+                
+                inputElement.addEventListener('input', function() {
+                    filterOptions();
+                    toggleDropdown(true);
+                    hiddenInput.value = ''; // Reset nilai tersembunyi saat mencari
+                });
+                
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.dropdown-search-container')) {
+                        toggleDropdown(false);
+                    }
+                });
+                
+                toggleDropdown(false);
+            }
+            
+            // Fungsi untuk inisialisasi dropdown sumber dana dinamis
+            function initSumberDanaDropdown(containerElement) {
+                const inputElement = containerElement.querySelector('.sumber-dana-input');
+                const listElement = containerElement.querySelector('.sumber-dana-list');
+                const hiddenInput = containerElement.querySelector('.sumber-dana-value');
+                
+                if (!inputElement || !listElement || !hiddenInput) return;
+                
+                function toggleDropdown(show) {
+                    listElement.style.display = show ? 'block' : 'none';
+                }
+                
+                function filterOptions() {
+                    const searchTerm = inputElement.value.toLowerCase();
+                    listElement.innerHTML = '';
+                    
+                    const filteredOptions = sumberDanaOptions.filter(option => 
+                        option.toLowerCase().includes(searchTerm)
+                    );
+                    
+                    if (filteredOptions.length === 0) {
+                        listElement.innerHTML = '<div class="dropdown-no-result">Sumber dana tidak ditemukan</div>';
+                        return;
+                    }
+                    
+                    filteredOptions.forEach(option => {
+                        const item = document.createElement('div');
+                        item.className = 'dropdown-search-item';
+                        item.textContent = option;
+                        
+                        item.addEventListener('click', function() {
+                            inputElement.value = option;
+                            hiddenInput.value = option;
+                            toggleDropdown(false);
+                        });
+                        
+                        listElement.appendChild(item);
+                    });
+                }
+                
+                inputElement.addEventListener('focus', function() {
+                    filterOptions();
+                    toggleDropdown(true);
+                });
+                
+                inputElement.addEventListener('input', function() {
+                    filterOptions();
+                    toggleDropdown(true);
+                    hiddenInput.value = ''; // Reset nilai tersembunyi saat mencari
+                });
+                
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.sumber-dana-dropdown')) {
+                        toggleDropdown(false);
+                    }
+                });
+                
+                toggleDropdown(false);
+            }
+            
+            // Fungsi untuk menambahkan item dinamis
+            function tambahItemDinamis(containerId, templateId, btnHapusClass, isSumberDana = false) {
+                const container = document.getElementById(containerId);
+                const template = document.getElementById(templateId);
+                
+                // Clone template
+                const newItem = template.cloneNode(true);
+                newItem.id = ''; // Hapus ID agar tidak ada duplikat
+                newItem.style.display = 'flex'; // Tampilkan item
+                
+                // Inisialisasi dropdown sumber dana jika diperlukan
+                if (isSumberDana) {
+                    const dropdownContainer = newItem.querySelector('.sumber-dana-dropdown');
+                    if (dropdownContainer) {
+                        initSumberDanaDropdown(dropdownContainer);
+                    }
+                }
+                
+                // Tampilkan tombol hapus (kecuali untuk item pertama)
+                const hapusBtn = newItem.querySelector(btnHapusClass);
+                if (hapusBtn) {
+                    hapusBtn.style.display = 'block';
+                    hapusBtn.addEventListener('click', function() {
+                        newItem.remove();
+                        updateRingkasan();
+                    });
+                }
+                
+                // Tambahkan event listener untuk input nilai
+                const inputNilai = newItem.querySelector('input[type="number"]');
+                if (inputNilai) {
+                    inputNilai.addEventListener('input', updateRingkasan);
+                }
+                
+                // Tambahkan event listener untuk select jika ada
+                const selectElement = newItem.querySelector('select');
+                if (selectElement) {
+                    // Reset nilai select
+                    selectElement.selectedIndex = 0;
+                }
+                
+                // Tambahkan ke container
+                container.appendChild(newItem);
+                
+                // Update ringkasan
+                updateRingkasan();
+            }
+            
+            // Inisialisasi dropdown SKPD saat halaman dimuat
+            initDropdown('skpdDropdownInput', 'skpdDropdownList', skpdOptions, 'skpd');
+            
+            // Event listener untuk tombol tambah sumber dana
+            document.getElementById('tambahSumberBtn').addEventListener('click', function() {
+                tambahItemDinamis('sumberDanaContainer', 'sumberDanaTemplate', '.btn-hapus-sumber', true);
+            });
+            
+            // Event listener untuk tombol tambah potongan iuran
+            document.getElementById('tambahPotonganIuranBtn').addEventListener('click', function() {
+                tambahItemDinamis('potonganIuranContainer', 'potonganIuranTemplate', '.btn-hapus-potongan');
+            });
+            
+            // Event listener untuk tombol tambah potongan pajak
+            document.getElementById('tambahPotonganPajakBtn').addEventListener('click', function() {
+                tambahItemDinamis('potonganPajakContainer', 'potonganPajakTemplate', '.btn-hapus-pajak');
+            });
+            
+            // Event listener untuk tombol reset
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin mereset formulir? Semua data yang telah diinput akan hilang.')) {
+                    document.getElementById('spmForm').reset();
+                    
+                    // Hapus semua item dinamis kecuali yang pertama
+                    document.querySelectorAll('#sumberDanaContainer .dynamic-item').forEach((item, index) => {
+                        if (index > 0) item.remove();
+                    });
+                    
+                    document.querySelectorAll('#potonganIuranContainer .dynamic-item').forEach((item, index) => {
+                        if (index > 0) item.remove();
+                    });
+                    
+                    document.querySelectorAll('#potonganPajakContainer .dynamic-item').forEach((item, index) => {
+                        if (index > 0) item.remove();
+                    });
+                    
+                    // Sembunyikan tombol hapus pada item pertama
+                    document.querySelectorAll('.btn-hapus-sumber, .btn-hapus-potongan, .btn-hapus-pajak').forEach(btn => {
+                        btn.style.display = 'none';
+                    });
+                    
+                    // Reset dropdown SKPD
+                    document.getElementById('skpdDropdownInput').value = '';
+                    document.getElementById('skpd').value = '';
+                    
+                    // Reset status message
+                    const statusMessage = document.getElementById('statusMessage');
+                    statusMessage.style.display = 'none';
+                    statusMessage.className = 'status-message';
+                    statusMessage.textContent = '';
+                    
+                    // Reset ringkasan
+                    updateRingkasan();
+                    
+                    alert('Formulir telah direset.');
+                }
+            });
+            
+            // Fungsi untuk menampilkan pesan status
+            function showStatusMessage(message, isSuccess = true) {
+                const statusMessage = document.getElementById('statusMessage');
+                statusMessage.textContent = message;
+                statusMessage.className = `status-message ${isSuccess ? 'status-success' : 'status-error'}`;
+                statusMessage.style.display = 'block';
+                
+                // Scroll ke pesan status
+                statusMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            // Event listener untuk submit form
+            document.getElementById('spmForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validasi sederhana
+                const jenisSpm = document.getElementById('jenisSpm').value;
+                const tanggalSpm = document.getElementById('tanggalSpm').value;
+                const skpd = document.getElementById('skpd').value;
+                const nomorSpm = document.getElementById('nomorSpm').value;
+                const uraianSpm = document.getElementById('uraianSpm').value;
+                
+                if (!jenisSpm || !tanggalSpm || !skpd || !nomorSpm || !uraianSpm) {
+                    showStatusMessage('Harap lengkapi semua field wajib di bagian Data Identitas SPM.', false);
+                    return;
+                }
+                
+                // Validasi sumber dana
+                let sumberDanaValid = true;
+                document.querySelectorAll('#sumberDanaContainer .dynamic-item:not(#sumberDanaTemplate)').forEach(item => {
+                    const sumberDanaValue = item.querySelector('.sumber-dana-value').value;
+                    const nilaiDana = item.querySelector('.nilai-dana-input').value;
+                    if (!sumberDanaValue || !nilaiDana || parseFloat(nilaiDana) <= 0) {
+                        sumberDanaValid = false;
+                    }
+                });
+                
+                if (!sumberDanaValid) {
+                    showStatusMessage('Harap lengkapi sumber dana dan nilai untuk setiap blok sumber dana.', false);
+                    return;
+                }
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const originalBtnText = submitBtn.innerHTML;
+                
+                // Nonaktifkan tombol sementara agar tidak diklik dua kali
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+                
+                // Kumpulkan data dari form
+                const formData = new FormData(this);
+                
+                // Tambahkan data total ringkasan ke FormData
+                const ringkasan = updateRingkasan();
+                formData.append('totalBruto', ringkasan.totalBruto.toString());
+                formData.append('totalPotonganIuran', ringkasan.totalPotonganIuran.toString());
+                formData.append('totalPotonganPajak', ringkasan.totalPotonganPajak.toString());
+                formData.append('nilaiNetto', ringkasan.nilaiNetto.toString());
+                
+                // URL endpoint Google Apps Script (GANTI DENGAN URL MILIKMU)
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbxZlI0R87aWn8dt7DVcUb-xXyN7tRZ_q_9i_fZsCXsM4ToQwKfQU0B0maMyC_3QGXi3ag/exec';
+                
+                // Kirim data ke Google Apps Script
+                fetch(scriptURL, {
+                    method: 'POST',
+                    body: new URLSearchParams(formData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                        showStatusMessage(data.message || '✅ Data SPM berhasil disimpan ke database!', true);
+                        
+                        // Reset form setelah berhasil disimpan (opsional, bisa dihapus)
+                        setTimeout(() => {
+                            document.getElementById('resetBtn').click();
+                        }, 2000);
+                    } else {
+                        showStatusMessage(data.message || '❌ Gagal menyimpan data.', false);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    showStatusMessage('❌ Gagal menyimpan data. Silakan coba lagi atau hubungi admin.', false);
+                })
+                .finally(() => {
+                    // Kembalikan tombol ke keadaan normal
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                });
+            });
+            
+            // Event listener untuk tombol kembali
+            document.getElementById('backBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Kembali ke dashboard? Data yang belum disimpan akan hilang.')) {
+                    window.location.href = 'index.html';
+                }
+            });
+            
+            // Event listener untuk input nilai (untuk update ringkasan real-time)
+            document.addEventListener('input', function(e) {
+                if (e.target.classList.contains('nilai-dana-input') || 
+                    e.target.classList.contains('nilai-potongan-input') || 
+                    e.target.classList.contains('nilai-pajak-input')) {
+                    updateRingkasan();
+                }
+            });
+            
+            // Inisialisasi: tampilkan satu sumber dana dan sembunyikan template
+            document.querySelectorAll('#sumberDanaTemplate, #potonganIuranTemplate, #potonganPajakTemplate').forEach(template => {
+                template.style.display = 'none';
+            });
+            
+            // Tambahkan satu sumber dana awal
+            tambahItemDinamis('sumberDanaContainer', 'sumberDanaTemplate', '.btn-hapus-sumber', true);
+            
+            // Inisialisasi ringkasan
+            updateRingkasan();
+        });
+    </script>
+</body>
+</html>
