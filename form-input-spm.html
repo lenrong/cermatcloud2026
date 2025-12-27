@@ -612,11 +612,6 @@
                 return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             }
             
-            // Parse format Rupiah ke angka
-            function parseRupiah(rupiahString) {
-                return parseInt(rupiahString.replace(/[^0-9]/g, '')) || 0;
-            }
-            
             // Hitung total dari elemen dengan kelas tertentu
             function hitungTotal(selector) {
                 let total = 0;
@@ -649,13 +644,6 @@
                 // Hitung nilai netto
                 const nilaiNetto = totalBruto - totalSemuaPotongan;
                 document.getElementById('nilaiNetto').textContent = formatRupiah(nilaiNetto);
-                
-                return {
-                    totalBruto,
-                    totalPotonganIuran,
-                    totalPotonganPajak,
-                    nilaiNetto
-                };
             }
             
             // Daftar SKPD
@@ -826,9 +814,13 @@
             function initSumberDanaDropdown(containerElement) {
                 const inputElement = containerElement.querySelector('.sumber-dana-input');
                 const listElement = containerElement.querySelector('.sumber-dana-list');
-                const hiddenInput = containerElement.querySelector('.sumber-dana-value');
+                // Cari hidden input yang berada setelah container dropdown
+                const hiddenInput = containerElement.nextElementSibling;
                 
-                if (!inputElement || !listElement || !hiddenInput) return;
+                if (!inputElement || !listElement || !hiddenInput) {
+                    console.error('Elemen dropdown sumber dana tidak ditemukan');
+                    return;
+                }
                 
                 function toggleDropdown(show) {
                     listElement.style.display = show ? 'block' : 'none';
@@ -921,6 +913,7 @@
                 if (selectElement) {
                     // Reset nilai select
                     selectElement.selectedIndex = 0;
+                    selectElement.addEventListener('change', updateRingkasan);
                 }
                 
                 // Tambahkan ke container
@@ -1000,7 +993,7 @@
             }
             
             // Event listener untuk submit form
-            document.getElementById('spmForm').addEventListener('submit', function(e) {
+            document.getElementById('spmForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 // Validasi sederhana
@@ -1017,7 +1010,14 @@
                 
                 // Validasi sumber dana
                 let sumberDanaValid = true;
-                document.querySelectorAll('#sumberDanaContainer .dynamic-item:not(#sumberDanaTemplate)').forEach(item => {
+                const sumberDanaItems = document.querySelectorAll('#sumberDanaContainer .dynamic-item:not(#sumberDanaTemplate)');
+                
+                if (sumberDanaItems.length === 0) {
+                    showStatusMessage('Harap tambahkan minimal satu sumber dana.', false);
+                    return;
+                }
+                
+                sumberDanaItems.forEach(item => {
                     const sumberDanaValue = item.querySelector('.sumber-dana-value').value;
                     const nilaiDana = item.querySelector('.nilai-dana-input').value;
                     if (!sumberDanaValue || !nilaiDana || parseFloat(nilaiDana) <= 0) {
@@ -1040,43 +1040,39 @@
                 // Kumpulkan data dari form
                 const formData = new FormData(this);
                 
-                // Tambahkan data total ringkasan ke FormData
-                const ringkasan = updateRingkasan();
-                formData.append('totalBruto', ringkasan.totalBruto.toString());
-                formData.append('totalPotonganIuran', ringkasan.totalPotonganIuran.toString());
-                formData.append('totalPotonganPajak', ringkasan.totalPotonganPajak.toString());
-                formData.append('nilaiNetto', ringkasan.nilaiNetto.toString());
+                // Hapus data total dari FormData karena tidak akan dikirim
+                // Kita hanya akan mengirim data sumber dana dan potongan sebagai array
                 
-                // URL endpoint Google Apps Script (GANTI DENGAN URL MILIKMU)
+                // URL endpoint Google Apps Script
                 const scriptURL = 'https://script.google.com/macros/s/AKfycbxZlI0R87aWn8dt7DVcUb-xXyN7tRZ_q_9i_fZsCXsM4ToQwKfQU0B0maMyC_3QGXi3ag/exec';
                 
-                // Kirim data ke Google Apps Script
-                fetch(scriptURL, {
-                    method: 'POST',
-                    body: new URLSearchParams(formData)
-                })
-                .then(response => response.json())
-                .then(data => {
+                try {
+                    // Kirim data ke Google Apps Script
+                    const response = await fetch(scriptURL, {
+                        method: 'POST',
+                        body: new URLSearchParams(formData)
+                    });
+                    
+                    const data = await response.json();
+                    
                     if (data.result === 'success') {
                         showStatusMessage(data.message || '✅ Data SPM berhasil disimpan ke database!', true);
                         
-                        // Reset form setelah berhasil disimpan (opsional, bisa dihapus)
+                        // Reset form setelah berhasil disimpan
                         setTimeout(() => {
                             document.getElementById('resetBtn').click();
-                        }, 2000);
+                        }, 3000);
                     } else {
                         showStatusMessage(data.message || '❌ Gagal menyimpan data.', false);
                     }
-                })
-                .catch(error => {
+                } catch (error) {
                     console.error('Error!', error.message);
                     showStatusMessage('❌ Gagal menyimpan data. Silakan coba lagi atau hubungi admin.', false);
-                })
-                .finally(() => {
+                } finally {
                     // Kembalikan tombol ke keadaan normal
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalBtnText;
-                });
+                }
             });
             
             // Event listener untuk tombol kembali
