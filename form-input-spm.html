@@ -651,529 +651,528 @@
         </form>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Format angka ke format Rupiah
-            function formatRupiah(angka) {
-                return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Format angka ke format Rupiah
+        function formatRupiah(angka) {
+            return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        
+        // Hitung total dari elemen dengan kelas tertentu
+        function hitungTotal(selector) {
+            let total = 0;
+            document.querySelectorAll(selector).forEach(input => {
+                const nilai = parseFloat(input.value) || 0;
+                total += nilai;
+            });
+            return total;
+        }
+        
+        // Update semua total dan ringkasan
+        function updateRingkasan() {
+            // Hitung total bruto dari semua sumber dana
+            const totalBruto = hitungTotal('.nilai-dana-input');
+            document.getElementById('totalBruto').textContent = formatRupiah(totalBruto);
+            document.getElementById('summaryBruto').textContent = formatRupiah(totalBruto);
+            
+            // Hitung total potongan iuran
+            const totalPotonganIuran = hitungTotal('#potonganIuranContainer .nilai-potongan-input');
+            document.getElementById('totalPotonganIuran').textContent = formatRupiah(totalPotonganIuran);
+            
+            // Hitung total potongan pajak
+            const totalPotonganPajak = hitungTotal('#potonganPajakContainer .nilai-pajak-input');
+            document.getElementById('totalPotonganPajak').textContent = formatRupiah(totalPotonganPajak);
+            
+            // Hitung total semua potongan
+            const totalSemuaPotongan = totalPotonganIuran + totalPotonganPajak;
+            document.getElementById('totalSemuaPotongan').textContent = formatRupiah(totalSemuaPotongan);
+            
+            // Hitung nilai netto
+            const nilaiNetto = totalBruto - totalSemuaPotongan;
+            document.getElementById('nilaiNetto').textContent = formatRupiah(nilaiNetto);
+        }
+        
+        // Daftar SKPD
+        const skpdOptions = [
+            "DINAS PENDIDIKAN, PEMUDA DAN OLAHRAGA",
+            "DINAS KESEHATAN",
+            "DINAS PEKERJAAN UMUM DAN PENATAAN RUANG",
+            "DINAS PERUMAHAN RAKYAT KAWASAN PERMUKIMAN DAN PERTANAHAN",
+            "SATUAN POLISI PAMONG PRAJA DAN PEMADAM KEBAKARAN",
+            "BADAN PENANGGULANGAN BENCANA DAERAH",
+            "DINAS SOSIAL",
+            "DINAS PEMBERDAYAAN PEREMPUAN DAN PERLINDUNGAN ANAK",
+            "DINAS KETAHANAN PANGAN",
+            "DINAS LINGKUNGAN HIDUP DAN KEBERSIHAN",
+            "DINAS KEPENDUDUKAN DAN PENCATATAN SIPIL",
+            "DINAS PEMBERDAYAAN MASYARAKAT DAN DESA",
+            "DINAS PENGENDALIAN PENDUDUK DAN KELUARGA BERENCANA",
+            "DINAS PERHUBUNGAN",
+            "DINAS KOMUNIKASI, INFORMATIKA DAN PERSANDIAN",
+            "DINAS KOPERASI, USAHA KECIL DAN MENENGAH, DAN PERINDUSTRIAN",
+            "DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU",
+            "DINAS PERPUSTAKAAN DAN KEARSIPAN",
+            "DINAS KELAUTAN DAN PERIKANAN",
+            "DINAS PARIWISATA DAN KEBUDAYAAN",
+            "DINAS PERKEBUNAN",
+            "DINAS TANAMAN PANGAN, HOLTIKULTURA, DAN PETERNAKAN",
+            "DINAS PERDAGANGAN",
+            "DINAS TRANSMIGRASI DAN TENAGA KERJA",
+            "SEKRETARIAT DAERAH",
+            "SEKRETARIAT DPRD",
+            "BADAN PERENCANAAN, PENELITIAN DAN PENGEMBANGAN",
+            "BADAN PENDAPATAN DAERAH",
+            "BADAN PENGELOLA KEUANGAN DAN ASET DAERAH",
+            "BADAN KEPEGAWAIAN, PENDIDIKAN DAN PELATIHAN",
+            "INSPEKTORAT DAERAH",
+            "KANTOR KECAMATAN MAMUJU",
+            "KANTOR KECAMATAN SIMBORO",
+            "KANTOR KECAMATAN TAPALANG",
+            "KANTOR KECAMATAN TAPALANG BARAT",
+            "KANTOR KECAMATAN KALUKKU",
+            "KANTOR KECAMATAN PAPALANG",
+            "KANTOR KECAMATAN SAMPAGA",
+            "KANTOR KECAMATAN BONEHAU",
+            "KANTOR KECAMATAN KALUMPANG",
+            "KANTOR KECAMATAN KEPULAUAN BALA-BALAKANG",
+            "KANTOR KECAMATAN TOMMO",
+            "BADAN KESATUAN BANGSA DAN POLITIK"
+        ];
+        
+        // Daftar Sumber Dana
+        const sumberDanaOptions = [
+            "Dana Alokasi Umum (DAU)",
+            "DAU yang Ditentukan Penggunaannya Bidang Pendidikan",
+            "DAU yang Ditentukan Penggunaannya Bidang Kesehatan",
+            "DAU yang Ditentukan Penggunaannya Bidang Pekerjaan Umum",
+            "DAU Tambahan Dukungan Pendanaan Kelurahan",
+            "DAU Tambahan Dukungan Pendanaan atas Kebijakan Penggajian Pegawai Pemerintah dengan Perjanjian Kerja",
+            "DAK Fisik-Bidang Pendidikan-PAUD",
+            "DAK Fisik-Bidang Pendidikan-SD",
+            "DAK Fisik-Bidang Pendidikan-SMP",
+            "DAK Fisik-Bidang Kesehatan dan KB-Reguler-Pelayanan Kesehatan Dasar",
+            "DAK Fisik-Bidang Kesehatan dan KB-Reguler-Pelayanan Kesehatan Rujukan",
+            "DAK Fisik-Bidang Kesehatan dan KB-Reguler-Pelayanan Kefarmasian",
+            "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Penurunan AKI dan AKB",
+            "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Penguatan Intervensi Stunting",
+            "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Peningkatan Pencegahan dan Pengendalian Penyakit dan Sanitasi Total Berbasis Masyarakat",
+            "DAK Fisik-Bidang Kesehatan dan KB-Afirmasi-Penguatan Prasarana Dasar Puskesmas",
+            "DAK Fisik-Bidang Kesehatan dan KB-Reguler-KB",
+            "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Penurunan Stunting (KB)",
+            "DAK Fisik-Bidang Jalan-Reguler-Jalan",
+            "DAK Fisik-Bidang Jalan-Penugasan-Jalan",
+            "DAK Fisik-Bidang Air Minum-Reguler",
+            "DAK Fisik-Bidang Air Minum-Afirmasi",
+            "DAK Fisik-Bidang Air Minum-Penugasan",
+            "DAK Fisik-Bidang Sanitasi-Reguler",
+            "DAK Fisik-Bidang Sanitasi-Afirmasi",
+            "DAK Fisik-Bidang Sanitasi-Penugasan",
+            "DAK Fisik-Bidang Irigasi-Penugasan",
+            "DAK Non Fisik-BOS Reguler",
+            "DAK Non Fisik-BOS Kinerja",
+            "DAK Non Fisik-BOP PAUD",
+            "DAK Non Fisik-BOP Pendidikan Kesetaraan",
+            "DAK Non Fisik-Dana BOK-BOK Dinas-BOK Kabupaten/Kota",
+            "DAK Non Fisik-Dana BOK-BOK Dinas-BOK Pengawasan Obat dan Makanan",
+            "DAK Non Fisik-BOKKB-BOKB",
+            "DAK Non Fisik-Dana Pelayanan Perlindungan Perempuan dan Anak",
+            "DBH Sawit",
+            "Dana Bagi Hasil (DBH)",
+            "Insentif Fiskal Untuk Penghargaan Kinerja Tahun Berjalan",
+            "Dana Desa",
+            "Pendapatan Bagi Hasil Pajak Rokok",
+            "Pajak Bahan Bakar Kendaraan Bermotor (PBBKB)",
+            "Pajak Air Permukaan",
+            "Pajak Daerah",
+            "PBJT-Konsumsi Tenaga Listrik dari Sumber Lain",
+            "Opsen PKB",
+            "Pajak Air Tanah",
+            "Retribusi Pelayanan Kesehatan di Puskesmas",
+            "Retribusi Pelayanan Kesehatan di Rumah Sakit Umum Daerah",
+            "Retribusi Jasa Umum",
+            "Bagian Laba yang Dibagikan kepada Pemerintah Daerah (Dividen) atas Penyertaan Modal pada Perusahaan Milik Daerah/BUMD",
+            "Lain-lain PAD Yang Sah",
+            "Sisa Lebih Perhitungan Anggaran Tahun Sebelumnya",
+            "Pajak Penerangan Jalan"
+        ];
+        
+        // Fungsi untuk membuat dropdown searchable
+        function initDropdown(inputId, listId, optionsArray, hiddenInputId) {
+            const inputElement = document.getElementById(inputId);
+            const listElement = document.getElementById(listId);
+            const hiddenInput = document.getElementById(hiddenInputId);
+            
+            if (!inputElement || !listElement || !hiddenInput) return;
+            
+            function toggleDropdown(show) {
+                listElement.style.display = show ? 'block' : 'none';
             }
             
-            // Hitung total dari elemen dengan kelas tertentu
-            function hitungTotal(selector) {
-                let total = 0;
-                document.querySelectorAll(selector).forEach(input => {
-                    const nilai = parseFloat(input.value) || 0;
-                    total += nilai;
-                });
-                return total;
-            }
-            
-            // Update semua total dan ringkasan
-            function updateRingkasan() {
-                // Hitung total bruto dari semua sumber dana
-                const totalBruto = hitungTotal('.nilai-dana-input');
-                document.getElementById('totalBruto').textContent = formatRupiah(totalBruto);
-                document.getElementById('summaryBruto').textContent = formatRupiah(totalBruto);
+            function filterOptions() {
+                const searchTerm = inputElement.value.toLowerCase();
+                listElement.innerHTML = '';
                 
-                // Hitung total potongan iuran
-                const totalPotonganIuran = hitungTotal('#potonganIuranContainer .nilai-potongan-input');
-                document.getElementById('totalPotonganIuran').textContent = formatRupiah(totalPotonganIuran);
+                const filteredOptions = optionsArray.filter(option => 
+                    option.toLowerCase().includes(searchTerm)
+                );
                 
-                // Hitung total potongan pajak
-                const totalPotonganPajak = hitungTotal('#potonganPajakContainer .nilai-pajak-input');
-                document.getElementById('totalPotonganPajak').textContent = formatRupiah(totalPotonganPajak);
-                
-                // Hitung total semua potongan
-                const totalSemuaPotongan = totalPotonganIuran + totalPotonganPajak;
-                document.getElementById('totalSemuaPotongan').textContent = formatRupiah(totalSemuaPotongan);
-                
-                // Hitung nilai netto
-                const nilaiNetto = totalBruto - totalSemuaPotongan;
-                document.getElementById('nilaiNetto').textContent = formatRupiah(nilaiNetto);
-            }
-            
-            // Daftar SKPD
-            const skpdOptions = [
-                "DINAS PENDIDIKAN, PEMUDA DAN OLAHRAGA",
-                "DINAS KESEHATAN",
-                "DINAS PEKERJAAN UMUM DAN PENATAAN RUANG",
-                "DINAS PERUMAHAN RAKYAT KAWASAN PERMUKIMAN DAN PERTANAHAN",
-                "SATUAN POLISI PAMONG PRAJA DAN PEMADAM KEBAKARAN",
-                "BADAN PENANGGULANGAN BENCANA DAERAH",
-                "DINAS SOSIAL",
-                "DINAS PEMBERDAYAAN PEREMPUAN DAN PERLINDUNGAN ANAK",
-                "DINAS KETAHANAN PANGAN",
-                "DINAS LINGKUNGAN HIDUP DAN KEBERSIHAN",
-                "DINAS KEPENDUDUKAN DAN PENCATATAN SIPIL",
-                "DINAS PEMBERDAYAAN MASYARAKAT DAN DESA",
-                "DINAS PENGENDALIAN PENDUDUK DAN KELUARGA BERENCANA",
-                "DINAS PERHUBUNGAN",
-                "DINAS KOMUNIKASI, INFORMATIKA DAN PERSANDIAN",
-                "DINAS KOPERASI, USAHA KECIL DAN MENENGAH, DAN PERINDUSTRIAN",
-                "DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU",
-                "DINAS PERPUSTAKAAN DAN KEARSIPAN",
-                "DINAS KELAUTAN DAN PERIKANAN",
-                "DINAS PARIWISATA DAN KEBUDAYAAN",
-                "DINAS PERKEBUNAN",
-                "DINAS TANAMAN PANGAN, HOLTIKULTURA, DAN PETERNAKAN",
-                "DINAS PERDAGANGAN",
-                "DINAS TRANSMIGRASI DAN TENAGA KERJA",
-                "SEKRETARIAT DAERAH",
-                "SEKRETARIAT DPRD",
-                "BADAN PERENCANAAN, PENELITIAN DAN PENGEMBANGAN",
-                "BADAN PENDAPATAN DAERAH",
-                "BADAN PENGELOLA KEUANGAN DAN ASET DAERAH",
-                "BADAN KEPEGAWAIAN, PENDIDIKAN DAN PELATIHAN",
-                "INSPEKTORAT DAERAH",
-                "KANTOR KECAMATAN MAMUJU",
-                "KANTOR KECAMATAN SIMBORO",
-                "KANTOR KECAMATAN TAPALANG",
-                "KANTOR KECAMATAN TAPALANG BARAT",
-                "KANTOR KECAMATAN KALUKKU",
-                "KANTOR KECAMATAN PAPALANG",
-                "KANTOR KECAMATAN SAMPAGA",
-                "KANTOR KECAMATAN BONEHAU",
-                "KANTOR KECAMATAN KALUMPANG",
-                "KANTOR KECAMATAN KEPULAUAN BALA-BALAKANG",
-                "KANTOR KECAMATAN TOMMO",
-                "BADAN KESATUAN BANGSA DAN POLITIK"
-            ];
-            
-            // Daftar Sumber Dana
-            const sumberDanaOptions = [
-                "Dana Alokasi Umum (DAU)",
-                "DAU yang Ditentukan Penggunaannya Bidang Pendidikan",
-                "DAU yang Ditentukan Penggunaannya Bidang Kesehatan",
-                "DAU yang Ditentukan Penggunaannya Bidang Pekerjaan Umum",
-                "DAU Tambahan Dukungan Pendanaan Kelurahan",
-                "DAU Tambahan Dukungan Pendanaan atas Kebijakan Penggajian Pegawai Pemerintah dengan Perjanjian Kerja",
-                "DAK Fisik-Bidang Pendidikan-PAUD",
-                "DAK Fisik-Bidang Pendidikan-SD",
-                "DAK Fisik-Bidang Pendidikan-SMP",
-                "DAK Fisik-Bidang Kesehatan dan KB-Reguler-Pelayanan Kesehatan Dasar",
-                "DAK Fisik-Bidang Kesehatan dan KB-Reguler-Pelayanan Kesehatan Rujukan",
-                "DAK Fisik-Bidang Kesehatan dan KB-Reguler-Pelayanan Kefarmasian",
-                "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Penurunan AKI dan AKB",
-                "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Penguatan Intervensi Stunting",
-                "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Peningkatan Pencegahan dan Pengendalian Penyakit dan Sanitasi Total Berbasis Masyarakat",
-                "DAK Fisik-Bidang Kesehatan dan KB-Afirmasi-Penguatan Prasarana Dasar Puskesmas",
-                "DAK Fisik-Bidang Kesehatan dan KB-Reguler-KB",
-                "DAK Fisik-Bidang Kesehatan dan KB-Penugasan-Penurunan Stunting (KB)",
-                "DAK Fisik-Bidang Jalan-Reguler-Jalan",
-                "DAK Fisik-Bidang Jalan-Penugasan-Jalan",
-                "DAK Fisik-Bidang Air Minum-Reguler",
-                "DAK Fisik-Bidang Air Minum-Afirmasi",
-                "DAK Fisik-Bidang Air Minum-Penugasan",
-                "DAK Fisik-Bidang Sanitasi-Reguler",
-                "DAK Fisik-Bidang Sanitasi-Afirmasi",
-                "DAK Fisik-Bidang Sanitasi-Penugasan",
-                "DAK Fisik-Bidang Irigasi-Penugasan",
-                "DAK Non Fisik-BOS Reguler",
-                "DAK Non Fisik-BOS Kinerja",
-                "DAK Non Fisik-BOP PAUD",
-                "DAK Non Fisik-BOP Pendidikan Kesetaraan",
-                "DAK Non Fisik-Dana BOK-BOK Dinas-BOK Kabupaten/Kota",
-                "DAK Non Fisik-Dana BOK-BOK Dinas-BOK Pengawasan Obat dan Makanan",
-                "DAK Non Fisik-BOKKB-BOKB",
-                "DAK Non Fisik-Dana Pelayanan Perlindungan Perempuan dan Anak",
-                "DBH Sawit",
-                "Dana Bagi Hasil (DBH)",
-                "Insentif Fiskal Untuk Penghargaan Kinerja Tahun Berjalan",
-                "Dana Desa",
-                "Pendapatan Bagi Hasil Pajak Rokok",
-                "Pajak Bahan Bakar Kendaraan Bermotor (PBBKB)",
-                "Pajak Air Permukaan",
-                "Pajak Daerah",
-                "PBJT-Konsumsi Tenaga Listrik dari Sumber Lain",
-                "Opsen PKB",
-                "Pajak Air Tanah",
-                "Retribusi Pelayanan Kesehatan di Puskesmas",
-                "Retribusi Pelayanan Kesehatan di Rumah Sakit Umum Daerah",
-                "Retribusi Jasa Umum",
-                "Bagian Laba yang Dibagikan kepada Pemerintah Daerah (Dividen) atas Penyertaan Modal pada Perusahaan Milik Daerah/BUMD",
-                "Lain-lain PAD Yang Sah",
-                "Sisa Lebih Perhitungan Anggaran Tahun Sebelumnya",
-                "Pajak Penerangan Jalan"
-            ];
-            
-            // Fungsi untuk membuat dropdown searchable
-            function initDropdown(inputId, listId, optionsArray, hiddenInputId) {
-                const inputElement = document.getElementById(inputId);
-                const listElement = document.getElementById(listId);
-                const hiddenInput = document.getElementById(hiddenInputId);
-                
-                if (!inputElement || !listElement || !hiddenInput) return;
-                
-                function toggleDropdown(show) {
-                    listElement.style.display = show ? 'block' : 'none';
-                }
-                
-                function filterOptions() {
-                    const searchTerm = inputElement.value.toLowerCase();
-                    listElement.innerHTML = '';
-                    
-                    const filteredOptions = optionsArray.filter(option => 
-                        option.toLowerCase().includes(searchTerm)
-                    );
-                    
-                    if (filteredOptions.length === 0) {
-                        listElement.innerHTML = '<div class="dropdown-no-result">Tidak ditemukan</div>';
-                        return;
-                    }
-                    
-                    filteredOptions.forEach(option => {
-                        const item = document.createElement('div');
-                        item.className = 'dropdown-search-item';
-                        item.textContent = option;
-                        
-                        item.addEventListener('click', function() {
-                            inputElement.value = option;
-                            hiddenInput.value = option;
-                            toggleDropdown(false);
-                        });
-                        
-                        listElement.appendChild(item);
-                    });
-                }
-                
-                inputElement.addEventListener('focus', function() {
-                    filterOptions();
-                    toggleDropdown(true);
-                });
-                
-                inputElement.addEventListener('input', function() {
-                    filterOptions();
-                    toggleDropdown(true);
-                    hiddenInput.value = ''; // Reset nilai tersembunyi saat mencari
-                });
-                
-                document.addEventListener('click', function(event) {
-                    if (!event.target.closest('.dropdown-search-container')) {
-                        toggleDropdown(false);
-                    }
-                });
-                
-                toggleDropdown(false);
-            }
-            
-            // Fungsi untuk inisialisasi dropdown sumber dana dinamis
-            function initSumberDanaDropdown(containerElement) {
-                const inputElement = containerElement.querySelector('.sumber-dana-input');
-                const listElement = containerElement.querySelector('.sumber-dana-list');
-                const hiddenInput = containerElement.nextElementSibling;
-                
-                if (!inputElement || !listElement || !hiddenInput) {
-                    console.error('Elemen dropdown sumber dana tidak ditemukan');
+                if (filteredOptions.length === 0) {
+                    listElement.innerHTML = '<div class="dropdown-no-result">Tidak ditemukan</div>';
                     return;
                 }
                 
-                function toggleDropdown(show) {
-                    listElement.style.display = show ? 'block' : 'none';
-                }
-                
-                function filterOptions() {
-                    const searchTerm = inputElement.value.toLowerCase();
-                    listElement.innerHTML = '';
+                filteredOptions.forEach(option => {
+                    const item = document.createElement('div');
+                    item.className = 'dropdown-search-item';
+                    item.textContent = option;
                     
-                    const filteredOptions = sumberDanaOptions.filter(option => 
-                        option.toLowerCase().includes(searchTerm)
-                    );
-                    
-                    if (filteredOptions.length === 0) {
-                        listElement.innerHTML = '<div class="dropdown-no-result">Sumber dana tidak ditemukan</div>';
-                        return;
-                    }
-                    
-                    filteredOptions.forEach(option => {
-                        const item = document.createElement('div');
-                        item.className = 'dropdown-search-item';
-                        item.textContent = option;
-                        
-                        item.addEventListener('click', function() {
-                            inputElement.value = option;
-                            hiddenInput.value = option;
-                            toggleDropdown(false);
-                        });
-                        
-                        listElement.appendChild(item);
-                    });
-                }
-                
-                inputElement.addEventListener('focus', function() {
-                    filterOptions();
-                    toggleDropdown(true);
-                });
-                
-                inputElement.addEventListener('input', function() {
-                    filterOptions();
-                    toggleDropdown(true);
-                    hiddenInput.value = ''; // Reset nilai tersembunyi saat mencari
-                });
-                
-                document.addEventListener('click', function(event) {
-                    if (!event.target.closest('.sumber-dana-dropdown')) {
+                    item.addEventListener('click', function() {
+                        inputElement.value = option;
+                        hiddenInput.value = option;
                         toggleDropdown(false);
-                    }
+                    });
+                    
+                    listElement.appendChild(item);
                 });
-                
-                toggleDropdown(false);
             }
             
-            // Fungsi untuk menambahkan item dinamis
-            function tambahItemDinamis(containerId, templateId, btnHapusClass, isSumberDana = false) {
-                const container = document.getElementById(containerId);
-                const template = document.getElementById(templateId);
+            inputElement.addEventListener('focus', function() {
+                filterOptions();
+                toggleDropdown(true);
+            });
+            
+            inputElement.addEventListener('input', function() {
+                filterOptions();
+                toggleDropdown(true);
+                hiddenInput.value = ''; // Reset nilai tersembunyi saat mencari
+            });
+            
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.dropdown-search-container')) {
+                    toggleDropdown(false);
+                }
+            });
+            
+            toggleDropdown(false);
+        }
+        
+        // Fungsi untuk inisialisasi dropdown sumber dana dinamis
+        function initSumberDanaDropdown(containerElement) {
+            const inputElement = containerElement.querySelector('.sumber-dana-input');
+            const listElement = containerElement.querySelector('.sumber-dana-list');
+            const hiddenInput = containerElement.nextElementSibling;
+            
+            if (!inputElement || !listElement || !hiddenInput) {
+                console.error('Elemen dropdown sumber dana tidak ditemukan');
+                return;
+            }
+            
+            function toggleDropdown(show) {
+                listElement.style.display = show ? 'block' : 'none';
+            }
+            
+            function filterOptions() {
+                const searchTerm = inputElement.value.toLowerCase();
+                listElement.innerHTML = '';
                 
-                // Clone template
-                const newItem = template.cloneNode(true);
-                newItem.id = ''; // Hapus ID agar tidak ada duplikat
-                newItem.style.display = 'flex'; // Tampilkan item
+                const filteredOptions = sumberDanaOptions.filter(option => 
+                    option.toLowerCase().includes(searchTerm)
+                );
                 
-                // Inisialisasi dropdown sumber dana jika diperlukan
-                if (isSumberDana) {
-                    const dropdownContainer = newItem.querySelector('.sumber-dana-dropdown');
-                    if (dropdownContainer) {
-                        initSumberDanaDropdown(dropdownContainer);
-                    }
+                if (filteredOptions.length === 0) {
+                    listElement.innerHTML = '<div class="dropdown-no-result">Sumber dana tidak ditemukan</div>';
+                    return;
                 }
                 
-                // Tampilkan tombol hapus (kecuali untuk item pertama)
-                const hapusBtn = newItem.querySelector(btnHapusClass);
-                if (hapusBtn) {
-                    hapusBtn.style.display = 'block';
-                    hapusBtn.addEventListener('click', function() {
-                        newItem.remove();
-                        updateRingkasan();
+                filteredOptions.forEach(option => {
+                    const item = document.createElement('div');
+                    item.className = 'dropdown-search-item';
+                    item.textContent = option;
+                    
+                    item.addEventListener('click', function() {
+                        inputElement.value = option;
+                        hiddenInput.value = option;
+                        toggleDropdown(false);
                     });
+                    
+                    listElement.appendChild(item);
+                });
+            }
+            
+            inputElement.addEventListener('focus', function() {
+                filterOptions();
+                toggleDropdown(true);
+            });
+            
+            inputElement.addEventListener('input', function() {
+                filterOptions();
+                toggleDropdown(true);
+                hiddenInput.value = ''; // Reset nilai tersembunyi saat mencari
+            });
+            
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.sumber-dana-dropdown')) {
+                    toggleDropdown(false);
                 }
-                
-                // Tambahkan event listener untuk input nilai
-                const inputNilai = newItem.querySelector('input[type="number"]');
-                if (inputNilai) {
-                    inputNilai.addEventListener('input', updateRingkasan);
+            });
+            
+            toggleDropdown(false);
+        }
+        
+        // Fungsi untuk menambahkan item dinamis
+        function tambahItemDinamis(containerId, templateId, btnHapusClass, isSumberDana = false) {
+            const container = document.getElementById(containerId);
+            const template = document.getElementById(templateId);
+            
+            // Clone template
+            const newItem = template.cloneNode(true);
+            newItem.id = ''; // Hapus ID agar tidak ada duplikat
+            newItem.style.display = 'flex'; // Tampilkan item
+            
+            // Inisialisasi dropdown sumber dana jika diperlukan
+            if (isSumberDana) {
+                const dropdownContainer = newItem.querySelector('.sumber-dana-dropdown');
+                if (dropdownContainer) {
+                    initSumberDanaDropdown(dropdownContainer);
                 }
+            }
+            
+            // Tampilkan tombol hapus (kecuali untuk item pertama)
+            const hapusBtn = newItem.querySelector(btnHapusClass);
+            if (hapusBtn) {
+                hapusBtn.style.display = 'block';
+                hapusBtn.addEventListener('click', function() {
+                    newItem.remove();
+                    updateRingkasan();
+                });
+            }
+            
+            // Tambahkan event listener untuk input nilai
+            const inputNilai = newItem.querySelector('input[type="number"]');
+            if (inputNilai) {
+                inputNilai.addEventListener('input', updateRingkasan);
+            }
+            
+            // Tambahkan event listener untuk select jika ada
+            const selectElement = newItem.querySelector('select');
+            if (selectElement) {
+                selectElement.selectedIndex = 0;
+            }
+            
+            // Tambahkan ke container
+            container.appendChild(newItem);
+            
+            // Update ringkasan
+            updateRingkasan();
+        }
+        
+        // Inisialisasi dropdown SKPD saat halaman dimuat
+        initDropdown('skpdDropdownInput', 'skpdDropdownList', skpdOptions, 'skpd');
+        
+        // Event listener untuk tombol tambah sumber dana
+        document.getElementById('tambahSumberBtn').addEventListener('click', function() {
+            tambahItemDinamis('sumberDanaContainer', 'sumberDanaTemplate', '.btn-hapus-sumber', true);
+        });
+        
+        // Event listener untuk tombol tambah potongan iuran
+        document.getElementById('tambahPotonganIuranBtn').addEventListener('click', function() {
+            tambahItemDinamis('potonganIuranContainer', 'potonganIuranTemplate', '.btn-hapus-potongan');
+        });
+        
+        // Event listener untuk tombol tambah potongan pajak
+        document.getElementById('tambahPotonganPajakBtn').addEventListener('click', function() {
+            tambahItemDinamis('potonganPajakContainer', 'potonganPajakTemplate', '.btn-hapus-pajak');
+        });
+        
+        // Event listener untuk tombol reset
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            if (confirm('Apakah Anda yakin ingin mereset formulir? Semua data yang telah diinput akan hilang.')) {
+                document.getElementById('spmForm').reset();
                 
-                // Tambahkan event listener untuk select jika ada
-                const selectElement = newItem.querySelector('select');
-                if (selectElement) {
-                    // Reset nilai select
-                    selectElement.selectedIndex = 0;
+                // Hapus semua item dinamis kecuali yang pertama
+                document.querySelectorAll('#sumberDanaContainer .dynamic-item').forEach((item, index) => {
+                    if (index > 0) item.remove();
+                });
+                
+                document.querySelectorAll('#potonganIuranContainer .dynamic-item').forEach((item, index) => {
+                    if (index > 0) item.remove();
+                });
+                
+                document.querySelectorAll('#potonganPajakContainer .dynamic-item').forEach((item, index) => {
+                    if (index > 0) item.remove();
+                });
+                
+                // Sembunyikan tombol hapus pada item pertama
+                document.querySelectorAll('.btn-hapus-sumber, .btn-hapus-potongan, .btn-hapus-pajak').forEach(btn => {
+                    btn.style.display = 'none';
+                });
+                
+                // Reset dropdown SKPD
+                document.getElementById('skpdDropdownInput').value = '';
+                document.getElementById('skpd').value = '';
+                
+                // Reset status message
+                const statusMessage = document.getElementById('statusMessage');
+                statusMessage.style.display = 'none';
+                statusMessage.className = 'status-message';
+                statusMessage.textContent = '';
+                
+                // Reset ringkasan
+                updateRingkasan();
+                
+                alert('Formulir telah direset.');
+            }
+        });
+        
+        // Fungsi untuk menampilkan pesan status
+        function showStatusMessage(message, isSuccess = true) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message ${isSuccess ? 'status-success' : 'status-error'}`;
+            statusMessage.style.display = 'block';
+            
+            // Scroll ke pesan status
+            statusMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        // Event listener untuk submit form - VERSI BARU YANG SIMPLE
+        document.getElementById('spmForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            console.log('=== FORM SUBMIT DIMULAI ===');
+            
+            // Validasi sederhana
+            const jenisSpm = document.getElementById('jenisSpm').value;
+            const tanggalSpm = document.getElementById('tanggalSpm').value;
+            const skpd = document.getElementById('skpd').value;
+            const nomorSpm = document.getElementById('nomorSpm').value;
+            const uraianSpm = document.getElementById('uraianSpm').value;
+            
+            if (!jenisSpm || !tanggalSpm || !skpd || !nomorSpm || !uraianSpm) {
+                showStatusMessage('Harap lengkapi semua field wajib di bagian Data Identitas SPM.', false);
+                return;
+            }
+            
+            // Validasi sumber dana
+            let sumberDanaValid = true;
+            const sumberDanaItems = document.querySelectorAll('#sumberDanaContainer .dynamic-item:not(#sumberDanaTemplate)');
+            
+            if (sumberDanaItems.length === 0) {
+                showStatusMessage('Harap tambahkan minimal satu sumber dana.', false);
+                return;
+            }
+            
+            const sumberDanaArray = [];
+            const nilaiDanaArray = [];
+            
+            sumberDanaItems.forEach(item => {
+                const sumberDanaValue = item.querySelector('.sumber-dana-value').value;
+                const nilaiDana = item.querySelector('.nilai-dana-input').value;
+                
+                if (!sumberDanaValue || !nilaiDana || parseFloat(nilaiDana) <= 0) {
+                    sumberDanaValid = false;
+                } else {
+                    sumberDanaArray.push(sumberDanaValue);
+                    nilaiDanaArray.push(parseFloat(nilaiDana));
                 }
+            });
+            
+            if (!sumberDanaValid) {
+                showStatusMessage('Harap lengkapi sumber dana dan nilai untuk setiap blok sumber dana.', false);
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalBtnText = submitBtn.innerHTML;
+            
+            // Nonaktifkan tombol sementara agar tidak diklik dua kali
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+            
+            // Tampilkan loading sederhana
+            showStatusMessage('⏳ Mengirim data ke server...', true);
+            
+            // Kumpulkan data menjadi JSON object
+            const formData = {
+                jenisSpm: jenisSpm,
+                tanggalSpm: tanggalSpm,
+                skpd: skpd,
+                nomorSpm: nomorSpm,
+                uraianSpm: uraianSpm,
+                sumber_dana: sumberDanaArray,
+                nilai_dana: nilaiDanaArray
+            };
+            
+            console.log('Data yang akan dikirim:', formData);
+            
+            // URL endpoint Google Apps Script BARU
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz4gIVBq4QS80KyZN5aiLc9yd9GN5zsYRH8nIrLWc-CTLT6OjKkVE_0uUJwpzOleKABFA/exec';
+            
+            try {
+                console.log('Mengirim ke:', scriptURL);
                 
-                // Tambahkan ke container
-                container.appendChild(newItem);
+                // Kirim data sebagai JSON
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
                 
-                // Update ringkasan
+                console.log('Response status:', response.status);
+                
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                if (data.result === 'success') {
+                    showStatusMessage(data.message || '✅ Data SPM berhasil disimpan ke database!', true);
+                    
+                    // Reset form setelah berhasil disimpan
+                    setTimeout(() => {
+                        document.getElementById('resetBtn').click();
+                    }, 3000);
+                } else {
+                    showStatusMessage(data.message || '❌ Gagal menyimpan data.', false);
+                }
+            } catch (error) {
+                console.error('Error!', error);
+                showStatusMessage('❌ Gagal menyimpan data. Silakan coba lagi atau hubungi admin.', false);
+            } finally {
+                // Kembalikan tombol ke keadaan normal
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        });
+        
+        // Event listener untuk tombol kembali
+        document.getElementById('backBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Kembali ke dashboard? Data yang belum disimpan akan hilang.')) {
+                window.location.href = 'index.html';
+            }
+        });
+        
+        // Event listener untuk input nilai (untuk update ringkasan real-time)
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('nilai-dana-input') || 
+                e.target.classList.contains('nilai-potongan-input') || 
+                e.target.classList.contains('nilai-pajak-input')) {
                 updateRingkasan();
             }
-            
-            // Inisialisasi dropdown SKPD saat halaman dimuat
-            initDropdown('skpdDropdownInput', 'skpdDropdownList', skpdOptions, 'skpd');
-            
-            // Event listener untuk tombol tambah sumber dana
-            document.getElementById('tambahSumberBtn').addEventListener('click', function() {
-                tambahItemDinamis('sumberDanaContainer', 'sumberDanaTemplate', '.btn-hapus-sumber', true);
-            });
-            
-            // Event listener untuk tombol tambah potongan iuran
-            document.getElementById('tambahPotonganIuranBtn').addEventListener('click', function() {
-                tambahItemDinamis('potonganIuranContainer', 'potonganIuranTemplate', '.btn-hapus-potongan');
-            });
-            
-            // Event listener untuk tombol tambah potongan pajak
-            document.getElementById('tambahPotonganPajakBtn').addEventListener('click', function() {
-                tambahItemDinamis('potonganPajakContainer', 'potonganPajakTemplate', '.btn-hapus-pajak');
-            });
-            
-            // Event listener untuk tombol reset
-            document.getElementById('resetBtn').addEventListener('click', function() {
-                if (confirm('Apakah Anda yakin ingin mereset formulir? Semua data yang telah diinput akan hilang.')) {
-                    document.getElementById('spmForm').reset();
-                    
-                    // Hapus semua item dinamis kecuali yang pertama
-                    document.querySelectorAll('#sumberDanaContainer .dynamic-item').forEach((item, index) => {
-                        if (index > 0) item.remove();
-                    });
-                    
-                    document.querySelectorAll('#potonganIuranContainer .dynamic-item').forEach((item, index) => {
-                        if (index > 0) item.remove();
-                    });
-                    
-                    document.querySelectorAll('#potonganPajakContainer .dynamic-item').forEach((item, index) => {
-                        if (index > 0) item.remove();
-                    });
-                    
-                    // Sembunyikan tombol hapus pada item pertama
-                    document.querySelectorAll('.btn-hapus-sumber, .btn-hapus-potongan, .btn-hapus-pajak').forEach(btn => {
-                        btn.style.display = 'none';
-                    });
-                    
-                    // Reset dropdown SKPD
-                    document.getElementById('skpdDropdownInput').value = '';
-                    document.getElementById('skpd').value = '';
-                    
-                    // Reset status message
-                    const statusMessage = document.getElementById('statusMessage');
-                    statusMessage.style.display = 'none';
-                    statusMessage.className = 'status-message';
-                    statusMessage.textContent = '';
-                    
-                    // Reset ringkasan
-                    updateRingkasan();
-                    
-                    alert('Formulir telah direset.');
-                }
-            });
-            
-            // Fungsi untuk menampilkan pesan status
-            function showStatusMessage(message, isSuccess = true) {
-                const statusMessage = document.getElementById('statusMessage');
-                statusMessage.textContent = message;
-                statusMessage.className = `status-message ${isSuccess ? 'status-success' : 'status-error'}`;
-                statusMessage.style.display = 'block';
-                
-                // Scroll ke pesan status
-                statusMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
-            
-            // Fungsi untuk menampilkan loading overlay
-            function showLoading() {
-                document.getElementById('loadingOverlay').style.display = 'flex';
-            }
-            
-            // Fungsi untuk menyembunyikan loading overlay
-            function hideLoading() {
-                document.getElementById('loadingOverlay').style.display = 'none';
-            }
-            
-            // Event listener untuk submit form
-            document.getElementById('spmForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                console.log('Tombol submit diklik'); // Debug log
-                
-                // Validasi sederhana
-                const jenisSpm = document.getElementById('jenisSpm').value;
-                const tanggalSpm = document.getElementById('tanggalSpm').value;
-                const skpd = document.getElementById('skpd').value;
-                const nomorSpm = document.getElementById('nomorSpm').value;
-                const uraianSpm = document.getElementById('uraianSpm').value;
-                
-                if (!jenisSpm || !tanggalSpm || !skpd || !nomorSpm || !uraianSpm) {
-                    showStatusMessage('Harap lengkapi semua field wajib di bagian Data Identitas SPM.', false);
-                    return;
-                }
-                
-                // Validasi sumber dana
-                let sumberDanaValid = true;
-                const sumberDanaItems = document.querySelectorAll('#sumberDanaContainer .dynamic-item:not(#sumberDanaTemplate)');
-                
-                if (sumberDanaItems.length === 0) {
-                    showStatusMessage('Harap tambahkan minimal satu sumber dana.', false);
-                    return;
-                }
-                
-                sumberDanaItems.forEach(item => {
-                    const sumberDanaValue = item.querySelector('.sumber-dana-value').value;
-                    const nilaiDana = item.querySelector('.nilai-dana-input').value;
-                    if (!sumberDanaValue || !nilaiDana || parseFloat(nilaiDana) <= 0) {
-                        sumberDanaValid = false;
-                    }
-                });
-                
-                if (!sumberDanaValid) {
-                    showStatusMessage('Harap lengkapi sumber dana dan nilai untuk setiap blok sumber dana.', false);
-                    return;
-                }
-                
-                const submitBtn = document.getElementById('submitBtn');
-                const originalBtnText = submitBtn.innerHTML;
-                
-                // Nonaktifkan tombol sementara agar tidak diklik dua kali
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
-                
-                // Tampilkan loading overlay
-                showLoading();
-                
-                // Kumpulkan data dari form
-                const formData = new FormData(this);
-                
-                // Log data yang akan dikirim (untuk debugging)
-                console.log('Data yang akan dikirim:');
-                for (let [key, value] of formData.entries()) {
-                    console.log(key + ': ' + value);
-                }
-                
-                // URL endpoint Google Apps Script
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbxZlI0R87aWn8dt7DVcUb-xXyN7tRZ_q_9i_fZsCXsM4ToQwKfQU0B0maMyC_3QGXi3ag/exec';
-                
-                try {
-                    console.log('Mengirim data ke: ' + scriptURL); // Debug log
-                    
-                    // Kirim data ke Google Apps Script
-                    const response = await fetch(scriptURL, {
-                        method: 'POST',
-                        body: new URLSearchParams(formData)
-                    });
-                    
-                    console.log('Response status:', response.status); // Debug log
-                    
-                    const data = await response.json();
-                    console.log('Response data:', data); // Debug log
-                    
-                    if (data.result === 'success') {
-                        showStatusMessage(data.message || '✅ Data SPM berhasil disimpan ke database!', true);
-                        
-                        // Reset form setelah berhasil disimpan
-                        setTimeout(() => {
-                            document.getElementById('resetBtn').click();
-                        }, 3000);
-                    } else {
-                        showStatusMessage(data.message || '❌ Gagal menyimpan data.', false);
-                    }
-                } catch (error) {
-                    console.error('Error!', error.message);
-                    console.error('Error details:', error);
-                    showStatusMessage('❌ Gagal menyimpan data. Silakan coba lagi atau hubungi admin.', false);
-                } finally {
-                    // Sembunyikan loading overlay
-                    hideLoading();
-                    
-                    // Kembalikan tombol ke keadaan normal
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalBtnText;
-                }
-            });
-            
-            // Event listener untuk tombol kembali
-            document.getElementById('backBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                if (confirm('Kembali ke dashboard? Data yang belum disimpan akan hilang.')) {
-                    window.location.href = 'index.html';
-                }
-            });
-            
-            // Event listener untuk input nilai (untuk update ringkasan real-time)
-            document.addEventListener('input', function(e) {
-                if (e.target.classList.contains('nilai-dana-input') || 
-                    e.target.classList.contains('nilai-potongan-input') || 
-                    e.target.classList.contains('nilai-pajak-input')) {
-                    updateRingkasan();
-                }
-            });
-            
-            // Inisialisasi: tampilkan satu sumber dana dan sembunyikan template
-            document.querySelectorAll('#sumberDanaTemplate, #potonganIuranTemplate, #potonganPajakTemplate').forEach(template => {
-                template.style.display = 'none';
-            });
-            
-            // Tambahkan satu sumber dana awal
-            tambahItemDinamis('sumberDanaContainer', 'sumberDanaTemplate', '.btn-hapus-sumber', true);
-            
-            // Inisialisasi ringkasan
-            updateRingkasan();
         });
-    </script>
+        
+        // Inisialisasi: tampilkan satu sumber dana dan sembunyikan template
+        document.querySelectorAll('#sumberDanaTemplate, #potonganIuranTemplate, #potonganPajakTemplate').forEach(template => {
+            template.style.display = 'none';
+        });
+        
+        // Tambahkan satu sumber dana awal
+        tambahItemDinamis('sumberDanaContainer', 'sumberDanaTemplate', '.btn-hapus-sumber', true);
+        
+        // Inisialisasi ringkasan
+        updateRingkasan();
+    });
+</script>
 </body>
 </html>
