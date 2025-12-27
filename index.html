@@ -395,10 +395,11 @@
                         Gunakan menu ini untuk melakukan pendaftaran dokumen SPM OPD sebelum proses input belanja.
                         Pastikan setiap dokumen hanya diregister satu kali untuk menghindari duplikasi data.
                     </p>
-                   <a href="form-input-spm.html" class="btn" id="belanjaBtn">
-    Input Belanja OPD
-    <i class="fas fa-arrow-right"></i>
-</a>
+                    <!-- PERUBAHAN PENTING: href diubah ke form-input-spm.html -->
+                    <a href="form-input-spm.html" class="btn" id="belanjaBtn">
+                        Input Belanja OPD
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
@@ -461,8 +462,8 @@
     <script>
         // Menangani klik tombol dengan pesan placeholder
         document.addEventListener('DOMContentLoaded', function() {
-            // Semua tombol di halaman
-            const buttons = document.querySelectorAll('.btn, .menu-btn');
+            // Semua tombol di halaman KECUALI tombol Input Belanja OPD yang sudah punya link
+            const buttons = document.querySelectorAll('.btn:not(#belanjaBtn), .menu-btn');
             
             buttons.forEach(button => {
                 button.addEventListener('click', function(e) {
@@ -472,9 +473,7 @@
                     const buttonText = this.textContent.trim();
                     
                     // Tampilkan pesan yang sesuai
-                    if (buttonText.includes('Input Belanja OPD')) {
-                        alert('Tombol "Input Belanja OPD" ditekan. URL akan ditambahkan kemudian.');
-                    } else if (buttonText.includes('Input Penerimaan')) {
+                    if (buttonText.includes('Input Penerimaan')) {
                         alert('Tombol "Input Penerimaan" ditekan. URL akan ditambahkan kemudian.');
                     } else if (buttonText.includes('Akses Menu')) {
                         alert('Menu "Cek Inputan Dokumen" akan dibuka. URL akan ditambahkan kemudian.');
