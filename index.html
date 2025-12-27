@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CERMAT-CLOUD | Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --light-green: #4caf50;
+            --soft-green: #e8f5e9;
+            --dark-green: #1b5e20;
+            --white: #ffffff;
+            --light-gray: #f5f7fa;
+            --medium-gray: #e0e0e0;
+            --text-dark: #333333;
+            --text-medium: #555555;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 10px 25px rgba(46, 125, 50, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: var(--white);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            padding: 25px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo-icon {
+            background-color: var(--primary-green);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .logo-text {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-green);
+            letter-spacing: 1px;
+        }
+        
+        .logo-subtitle {
+            font-size: 14px;
+            color: var(--text-medium);
+            margin-top: 5px;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--primary-green);
+            font-weight: 600;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+        
+        .description {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            font-size: 18px;
+            color: var(--text-medium);
+            line-height: 1.8;
+            padding: 25px 30px;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--light-green);
+        }
+        
+        /* Main Panels */
+        .panels-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        @media (max-width: 1100px) {
+            .panels-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .panel {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .panel:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .panel-header {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .panel-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 28px;
+        }
+        
+        .panel-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .panel-body {
+            padding: 30px;
+        }
+        
+        .panel-description {
+            font-size: 16px;
+            color: var(--text-medium);
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            background-color: var(--light-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(46, 125, 50, 0.25);
+        }
+        
+        .btn i {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+        
+        /* Additional Menu */
+        .additional-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        
+        .menu-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-top: 5px solid var(--light-green);
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .menu-icon {
+            background-color: var(--soft-green);
+            color: var(--primary-green);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .menu-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+        
+        .menu-description {
+            font-size: 15px;
+            color: var(--text-medium);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .menu-btn {
+            padding: 12px 24px;
+            background-color: transparent;
+            color: var(--primary-green);
+            border: 2px solid var(--light-green);
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+            margin-top: auto;
+        }
+        
+        .menu-btn:hover {
+            background-color: var(--soft-green);
+            color: var(--dark-green);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-green);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 30px;
+        }
+        
+        .footer-text {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 26px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .description {
+                font-size: 16px;
+                padding: 20px;
+            }
+            
+            .panels-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .panel-header {
+                padding: 20px;
+            }
+            
+            .panel-title {
+                font-size: 20px;
+            }
+            
+            .panel-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+                margin-right: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .panel-body {
+                padding: 20px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo-icon">C</div>
+                <div>
+                    <div class="logo-text">CERMAT-CLOUD</div>
+                    <div class="logo-subtitle">Dashboard Sistem Cek dan Rekonsiliasi Manajemen Transaksi</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Dashboard Sistem Manajemen Transaksi</h1>
+            <div class="hero-subtitle">CERMAT-CLOUD</div>
+            <div class="description">
+                CERMAT-CLOUD adalah platform terintegrasi untuk membantu OPD dalam melakukan pencatatan, pengecekan, dan rekonsiliasi transaksi belanja serta penerimaan secara akurat, transparan, dan real-time berbasis cloud.
+            </div>
+        </section>
+
+        <!-- Main Panels -->
+        <section class="panels-container">
+            <!-- Panel 1: Register SPM OPD -->
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <div class="panel-title">Register SPM OPD</div>
+                </div>
+                <div class="panel-body">
+                    <p class="panel-description">
+                        Gunakan menu ini untuk melakukan pendaftaran dokumen SPM OPD sebelum proses input belanja.
+                        Pastikan setiap dokumen hanya diregister satu kali untuk menghindari duplikasi data.
+                    </p>
+                    <a href="#" class="btn" id="belanjaBtn">
+                        Input Belanja OPD
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Panel 2: Register Penerimaan -->
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-icon">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <div class="panel-title">Register Penerimaan</div>
+                </div>
+                <div class="panel-body">
+                    <p class="panel-description">
+                        Menu ini digunakan untuk mendaftarkan dokumen penerimaan daerah.
+                        Pastikan data yang diinput sesuai dan tidak berulang agar proses rekonsiliasi berjalan lancar.
+                    </p>
+                    <a href="#" class="btn" id="penerimaanBtn">
+                        Input Penerimaan
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Menu -->
+        <section class="additional-menu">
+            <!-- Cek Inputan Dokumen -->
+            <div class="menu-card">
+                <div class="menu-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="menu-title">Cek Inputan Dokumen</h3>
+                <p class="menu-description">
+                    Untuk melakukan pengecekan status dan kelengkapan dokumen yang telah diinput.
+                </p>
+                <a href="#" class="menu-btn" id="cekDokumenBtn">Akses Menu</a>
+            </div>
+
+            <!-- Kritik & Saran -->
+            <div class="menu-card">
+                <div class="menu-icon">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <h3 class="menu-title">Kritik & Saran</h3>
+                <p class="menu-description">
+                    Sarana penyampaian masukan guna peningkatan kualitas layanan CERMAT-CLOUD.
+                </p>
+                <a href="#" class="menu-btn" id="kritikBtn">Kirim Masukan</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-text">© 2023 CERMAT-CLOUD. Sistem Cek dan Rekonsiliasi Manajemen Transaksi Berbasis Cloud.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menangani klik tombol dengan pesan placeholder
+        document.addEventListener('DOMContentLoaded', function() {
+            // Semua tombol di halaman
+            const buttons = document.querySelectorAll('.btn, .menu-btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Dapatkan teks dari tombol yang diklik
+                    const buttonText = this.textContent.trim();
+                    
+                    // Tampilkan pesan yang sesuai
+                    if (buttonText.includes('Input Belanja OPD')) {
+                        alert('Tombol "Input Belanja OPD" ditekan. URL akan ditambahkan kemudian.');
+                    } else if (buttonText.includes('Input Penerimaan')) {
+                        alert('Tombol "Input Penerimaan" ditekan. URL akan ditambahkan kemudian.');
+                    } else if (buttonText.includes('Akses Menu')) {
+                        alert('Menu "Cek Inputan Dokumen" akan dibuka. URL akan ditambahkan kemudian.');
+                    } else if (buttonText.includes('Kirim Masukan')) {
+                        alert('Menu "Kritik & Saran" akan dibuka. URL akan ditambahkan kemudian.');
+                    } else {
+                        alert('Fitur akan segera tersedia. URL sedang dalam pengembangan.');
+                    }
+                    
+                    // Log untuk debugging
+                    console.log(`Tombol "${buttonText}" diklik.`);
+                });
+            });
+            
+            // Tambahkan efek hover yang lebih halus pada panel
+            const panels = document.querySelectorAll('.panel');
+            panels.forEach(panel => {
+                panel.addEventListener('mouseenter', function() {
+                    this.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+                });
+            });
+            
+            // Tambahkan efek hover yang lebih halus pada menu card
+            const menuCards = document.querySelectorAll('.menu-card');
+            menuCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
